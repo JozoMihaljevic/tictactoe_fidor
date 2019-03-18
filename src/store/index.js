@@ -85,30 +85,25 @@ function checkWinner(board) {
   if (winner !== null) return winner;
 
   if (winner === null && allFieldsChecked) {
-    return 'draw';
+    return 'Draw';
   }
 
   return null;
 }
 
 export const setFieldValueAndChangeActivePlayer = fieldId => (dispatch, getState) => {
-  const playerNumber = getState().activePlayer;
-  const currentBoardValue = getState().board[fieldId];
+  const { activePlayer, board } = getState();
+  const currentBoardValue = board[fieldId];
   if (currentBoardValue) {
     return;
   }
-  dispatch(setFieldValue(fieldId, playerNumber));
-  let nextPlayerNumber = playerNumber;
-  if (playerNumber === 1) {
-    nextPlayerNumber = 2;
-  } else {
-    nextPlayerNumber = 1;
-  }
+  dispatch(setFieldValue(fieldId, activePlayer));
   const winner = checkWinner(getState().board);
   if (winner) {
-    return dispatch(setWinner(winner)); // eslint-disable-line
+    dispatch(setWinner(winner));
+    return;
   }
-  return dispatch(setActivePlayer(nextPlayerNumber)); // eslint-disable-line
+  dispatch(setActivePlayer(activePlayer === 1 ? 2 : 1));
 };
 
 const initialState = {

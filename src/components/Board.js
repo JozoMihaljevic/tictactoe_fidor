@@ -18,8 +18,8 @@ class Board extends Component {
 
     let winnerText = '';
     let boardClassName = 'Board';
-    if (winner === 'draw') {
-      winnerText = 'Draw';
+    if (winner === 'Draw') {
+      winnerText = `${winner}`;
       boardClassName += ' DisabledBoard';
     } else if (winner === 1 || winner === 2) {
       winnerText = `Player ${winner} won!`;
